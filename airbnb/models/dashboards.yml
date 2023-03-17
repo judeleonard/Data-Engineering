@@ -1,0 +1,16 @@
+version: 2
+
+exposures:
+  - name: Housing_Dashboard
+    type: dashboard
+    maturity: low
+    url: https://3100c7df.us1a.app.preset.io/superset/dashboard/p/zAZb049je5Y/
+    description: Housing Dashboard about Airbnb listings and hosts 
+
+    depends_on:
+      - ref('dim_listing_w_host')
+      - ref('mart_fullmoon_reviews')
+
+    owner:
+      name: Ndu Jude Leonard
+      email: judeleonard86@gmail.com

@@ -1,0 +1,11 @@
+{
+    "my_credential_secrets": {
+        "database": "d2b_assessment",
+        "user": "judendu4707",
+        "password": "ksWSvpuBKa",
+        "host": "d2b-internal-assessment-dwh.cxeuj0ektqdz.eu-central-1.rds.amazonaws.com",
+        "port": "5432",
+        "bucketname": "d2b-internal-assessment-bucket",
+        "connection_string": "postgresql+psycopg2://judendu4707:ksWSvpuBKa@d2b-internal-assessment-dwh.cxeuj0ektqdz.eu-central-1.rds.amazonaws.com/d2b_assessment"
+    }
+}
