@@ -1,0 +1,6 @@
+pandas
+nltk==3.6.5
+tweepy
+pygooglenews
+feedparser
+pyarrow
