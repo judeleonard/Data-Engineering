@@ -8,6 +8,8 @@ nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import time
 
+from article_dim import preprocess_text, sentiment_scores
+
 ######## twitter config ####################################
 ACCESS_KEY = str(Variable.get("access_key"))
 ACCESS_SECRET = str(Variable.get("access_secret"))
@@ -45,43 +47,6 @@ def query_search_to_csv(text_query,count):
         tweet_dim_df.to_csv('/opt/airflow/staging/dimensions-data/{}-tweet_dim.csv'.format(text_query), sep=',', index = False)
     except ValueError as e:
         print(e)
-
-
-
-def remove_newline(text):
-    return re.sub('\n', ' ', str(text.lower()))
-
-def remove_symbols(text):
-    re.sub(r'^\x00-\x7F+', ' ', text)
-    return re.sub(r'[@!.,(\/&)?:#*...-;'']', '', str(text)) 
-
-def remove_urls(text):
-    return re.sub(r'http\S+', '', str(text))
- 
-
-def preprocess_text(text):
-    text = remove_urls(text)
-    text = remove_symbols(text)
-    text = remove_newline(text)
-    return text
-
-
-
-def sentiment_scores(sentence):
-    """This function calculates the sentiment scores for each tweet"""
- 
-    sid_obj = SentimentIntensityAnalyzer()
- 
-    sentiment_dict = sid_obj.polarity_scores(sentence)
- 
-    # decide sentiment as positive, negative and neutral
-    if sentiment_dict['neu'] > 0.80 and sentiment_dict['neu'] > sentiment_dict['pos'] and sentiment_dict['neu'] > sentiment_dict['neg']:
-        result="neutral"
-    elif sentiment_dict['pos'] > sentiment_dict['neg']:
-        result="positive"
-    else:
-        result="negative"
-    return result
 
 
 

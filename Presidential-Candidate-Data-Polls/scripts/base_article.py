@@ -36,4 +36,4 @@ if __name__ == '__main__':
         df = pd.DataFrame(dataset)
         # extract the news source
         df['news_source'] = df['title'].apply(lambda x: str(x).split('-')[1])
-        df.to_csv("/opt/airflow/staging/articles-data/{}-result.csv".format(query), sep=',', index=False)
+        df.to_csv("/opt/airflow/staging/facts/{}-result.csv".format(query), sep=',', index=False)
