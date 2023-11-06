@@ -1,4 +1,5 @@
 import psycopg2
+import pandas as pd
 
 # airflow operationss
 import logging
@@ -59,7 +60,7 @@ def load_data(filename: str, datapath: str, table_name: str):
     # loop through and read all downloaded csv files 
     connection = get_connection()
     cur = connection.cursor()
-    if prefix == 'twitter_fact':
+    if filename == 'twitter_fact':
         with open(datapath, 'r') as f:
             next(f) # Skip the header row.
             cur.copy_from(f, table_name, sep=',', null="")
@@ -130,7 +131,7 @@ def loading_table():
     """
     conn = get_connection()
     postgres_hook = conn.cursor()
-    sql_operations = sql.load_candidate_analytics_table
+    sql_operations = sql_statement.load_candidate_analytics_table
     postgres_hook.execute(sql_operations)
     if conn is not None:
         postgres_hook.execute(sql_statement.back_fills)
@@ -170,7 +171,7 @@ def clean_up():
     #download_path = '/opt/airflow/staging/*.csv'
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute(sql.drop_staging_tables)
+    cursor.execute(sql_statement.drop_staging_tables)
     if conn is not None:
         conn.commit()
         cursor.close()
