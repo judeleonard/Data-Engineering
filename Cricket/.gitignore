@@ -1,0 +1,14 @@
+.git
+.env
+.DS_Store # macOS specific ignore
+airflow_settings.yaml
+__pycache__/
+.astro/*
+IAC/Aws/*
+config
+IAC/.terraform/*
+IAC/.terraform.lock.hcl
+dev.tfvars
+terraform.tfstate
+terraform.tfstate.backup
+tests/*
