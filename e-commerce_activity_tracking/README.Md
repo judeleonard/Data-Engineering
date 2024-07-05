@@ -18,6 +18,13 @@ This project is aimed at leveraging data engineering to setup an ELT data pipeli
 
 `shipment_delivery` - containing fact table about shipment and their delivery dates
 
+
+## Pipeline Demo
+![](https://github.com/judeleonard/e-commerce_activity_tracking/blob/master/images/e_commerce_pipeline.png)
+
+## [See demo in real-time here](https://vimeo.com/765006630/457467d7d2)
+
+
 # Data Modeling Overview
 ![](https://github.com/judeleonard/e-commerce_activity_tracking/blob/master/images/data_modeling.png)
 
@@ -124,11 +131,6 @@ This task exports the `agg_shipment` table from our data warehouse analytics sch
 
 This task exports the `best_product` table from our data warehouse analytics schema to an S3 bucket as a backup or archive file
 
-
-## Pipeline Demo
-![](https://github.com/judeleonard/e-commerce_activity_tracking/blob/master/images/e_commerce_pipeline.png)
-
-## [See demo in real-time here](https://vimeo.com/765006630/457467d7d2)
 
 
 
