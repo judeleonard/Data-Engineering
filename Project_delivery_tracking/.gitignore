@@ -1,0 +1,9 @@
+.git
+.DS_Store # macOS specific ignore
+airflow_settings.yaml
+__pycache__/
+.astro
+include/dataset/*.csv
+plugins
+packages.txt
+

@@ -1,0 +1,51 @@
+version: 2
+
+sources:
+  - name: time_logger
+    schema: staging
+    tables:
+      - name: stg_time_logger
+        identifier: stg_time_logger
+        columns:
+          - name: Client
+            tests:
+              - dbt_expectations.expect_column_values_to_be_of_type:
+                  column_type: string
+          - name: Project
+            tests:
+              - dbt_expectations.expect_column_values_to_be_of_type:
+                    column_type: string
+          - name: Hours
+            description: total number of hours logged for each projects
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 24
+          - name: Billable
+            description: tells if a particular project is billable or not
+            tests:
+              - dbt_expectations.expect_column_distinct_count_to_equal:
+                  value: 2
+
+      - name: stg_clickups
+        identifier: stg_clickups
+        columns:
+          - name: billable
+            tests:    
+              - accepted_values:
+                  values: ['yes', 'no']
+          - name: hours
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+
+      - name: stg_float_allocation
+        identifier: stg_float_allocation
+        columns:
+          - name: estimated_hours
+            tests:
+              - positive_value
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+
+                  

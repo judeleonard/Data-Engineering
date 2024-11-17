@@ -1,0 +1,5 @@
+black
+pytest
+psycopg2-binary
+astronomer-cosmos>=1.0.3
+protobuf==3.20.0

@@ -1,0 +1,115 @@
+version: 2
+
+models:
+  - name: dim_clients
+    description: this table contain informations about the clients.
+    columns:
+      - name: ingestion_date
+        description: date each client record was created in the table
+        tests:
+          - not_null
+      - name: client_id
+        description: unique identifier number for each client in the table
+        tests:
+          - not_null
+          - unique
+  
+  - name: dim_employees
+    description: this table contain information about each staff/ employee
+    columns:
+      - name: ingestion_date
+        description: date each employee record was created in the table
+        tests:
+          - not_null
+      - name: employee_id
+        description: unique identifier for employee
+        tests:
+          - not_null
+          - unique
+  
+  - name: dim_projects
+    description: this table contain informations about each project
+    columns:
+      - name: ingestion_date
+        description: date each project record was created in the table
+        tests:
+          - not_null
+      - name: project_id
+        description: unique identifier for each project
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_tasks
+    description: this table contain information each task
+    columns:
+      - name: ingestion_date
+        description: date each task record was created in the table
+        tests:
+          - not_null
+      - name: task_id
+        description: A unique identifier for each task
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_dates
+    description: this table contains information about the dates for all time entries activities
+    columns:
+      - name: ingestion_date
+        description: date each time entry activity record was created in the table
+        tests:
+          - not_null
+      - name: date_id
+        description: unique identifier for each time entry 
+        tests:
+          - not_null
+      - name: month
+        tests:
+          - positive_value
+      - name: year
+        description: the year the time is logged
+        tests:
+          - positive_value
+
+
+  - name: fact_time_entries
+    description: fact table for all time entries related to Projects, Tasks, employees and clients.
+    columns:
+      - name: ingestion_date
+        tests:
+          - not_null
+      - name: client_id
+        description: unique identifier for each client 
+        tests:
+          - not_null
+          - unique    
+      - name: project_id
+        description: unique identifier for each project
+        tests:
+          - not_null
+          - unique
+      - name: employee_id
+        description: unique identifier for each employee
+        tests:
+          - unique
+          - not_null
+      - name: task_id
+        description: unique identifier for each task
+        tests:
+          - not_null
+          - unique
+      - name: date_id
+        description: unique identifier for each time entry
+        tests:
+          - not_null
+      - name: hour
+        description: hourly time for each time entry record
+     
+      - name: billable
+        description: whether each activity is billable or not
+        tests:
+          - accepted_values:
+              values: ['true', 'false']
+
+    
