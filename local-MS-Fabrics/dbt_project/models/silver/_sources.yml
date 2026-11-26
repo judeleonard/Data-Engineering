@@ -1,0 +1,14 @@
+version: 2
+sources:
+  - name: bronze
+    description: Raw, append-only Parquet landed by scripts/ingest_bronze.py (OneLake Files equivalent).
+    tables:
+      - name: legacy_leads
+        meta:
+          external_location: "read_parquet('{{ env_var('HG_DATA_DIR', '../data') }}/bronze/legacy_leads/*/*.parquet', hive_partitioning=false)"
+      - name: telephony_calls
+        meta:
+          external_location: "read_parquet('{{ env_var('HG_DATA_DIR', '../data') }}/bronze/telephony_calls/*/*.parquet', hive_partitioning=false)"
+      - name: ai_events
+        meta:
+          external_location: "read_parquet('{{ env_var('HG_DATA_DIR', '../data') }}/bronze/ai_events/*/*.parquet', hive_partitioning=false)"

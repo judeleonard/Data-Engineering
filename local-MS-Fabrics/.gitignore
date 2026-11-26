@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+data/*
+!data/.gitkeep
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/
+.pytest_cache/
+.env
+dbt_project/.user.yml
+*.csv
+*.json

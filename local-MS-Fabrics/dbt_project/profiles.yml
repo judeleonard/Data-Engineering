@@ -1,0 +1,13 @@
+# Local stand-in for a Fabric Lakehouse connection.
+# On Fabric you would swap this for dbt-fabric (Warehouse/SQL endpoint) or dbt-fabricspark (Lakehouse).
+helpgrid:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('HG_DATA_DIR', '../data') }}/lakehouse.duckdb"
+      threads: 4
+      external_root: "{{ env_var('HG_DATA_DIR', '../data') }}/silver"
+      settings:
+        memory_limit: "{{ env_var('HG_MEMORY_LIMIT', '4GB') }}"
+        preserve_insertion_order: false
