@@ -1,0 +1,25 @@
+version: 2
+models:
+- name: agg_lead_funnel_daily
+  columns:
+  - name: leads
+    data_tests:
+    - not_null
+- name: agg_agent_performance_daily
+  columns:
+  - name: agent_id
+    data_tests:
+    - not_null
+- name: agg_ai_model_performance
+  columns:
+  - name: events
+    data_tests:
+    - not_null
+- name: agg_contact_rate_by_hour
+  columns:
+  - name: contact_rate
+    data_tests:
+    - not_null
+- name: dq_call_reconciliation
+  description: Leads whose legacy aggregates disagree with the call log. Informational; thresholded by
+    a singular test.

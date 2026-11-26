@@ -1,0 +1,35 @@
+version: 2
+models:
+- name: stg_legacy_leads
+  columns:
+  - name: lead_id
+    data_tests:
+    - unique
+    - not_null
+  - name: lead_created_at
+    data_tests:
+    - not_null
+- name: stg_calls
+  columns:
+  - name: call_id
+    data_tests:
+    - unique
+    - not_null
+- name: stg_ai_katie_email
+  columns:
+  - name: event_id
+    data_tests:
+    - unique
+    - not_null
+- name: stg_ai_alas_routing
+  columns:
+  - name: event_id
+    data_tests:
+    - unique
+    - not_null
+- name: stg_ai_call_grades
+  columns:
+  - name: event_id
+    data_tests:
+    - unique
+    - not_null

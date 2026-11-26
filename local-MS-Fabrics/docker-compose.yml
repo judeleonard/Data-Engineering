@@ -1,0 +1,25 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    container_name: helpgrid-clickhouse
+    ports:
+      - "8123:8123"   # HTTP (clickhouse-connect, Power BI ODBC/HTTP)
+      - "9000:9000"   # native
+    ulimits:
+      nofile: {soft: 262144, hard: 262144}
+    environment:
+      CLICKHOUSE_DB: helpgrid
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: ""
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      # gold parquet -> readable from SQL as file('gold/<table>.parquet')
+      - ./data/gold:/var/lib/clickhouse/user_files/gold:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8123/ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+volumes:
+  clickhouse_data:

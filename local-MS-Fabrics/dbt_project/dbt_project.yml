@@ -1,0 +1,45 @@
+name: helpgrid
+version: "1.0.0"
+config-version: 2
+profile: helpgrid
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+test-paths: ["tests"]
+
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  # A lead whose legacy "Calls Attempted" differs from the call log by more than this is flagged
+  call_count_tolerance: 0
+  # Share of leads allowed to disagree before the reconciliation test FAILS the build
+  call_count_max_mismatch_rate: 0.05
+
+models:
+  helpgrid:
+    # SILVER: cleaned, typed, deduplicated -> persisted as Parquet files (lakehouse tables)
+    silver:
+      +materialized: external
+      +format: parquet
+      +schema: silver
+      +options:
+        compression: zstd
+      +tags: ["silver"]
+    # GOLD: dimensional model, queried in-engine; exported to Parquet + ClickHouse afterwards
+    gold:
+      +materialized: table
+      +schema: gold
+      +tags: ["gold"]
+    marts:
+      +materialized: table
+      +schema: gold
+      +tags: ["marts"]
+
+seeds:
+  helpgrid:
+    +schema: ref
+snapshots:
+  helpgrid:
+    +target_schema: snapshots

@@ -1,0 +1,115 @@
+version: 2
+models:
+- name: dim_leads
+  description: One row per lead (current state). Business flags are re-derived, not copied.
+  columns:
+  - name: lead_id
+    data_tests:
+    - unique
+    - not_null
+  - name: offer_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_offers')
+          field: offer_id
+  - name: status
+    data_tests:
+    - accepted_values:
+        arguments:
+          values:
+          - Active
+          - Paused
+          - Closed
+- name: dim_offers
+  columns:
+  - name: offer_id
+    data_tests:
+    - unique
+    - not_null
+- name: dim_agents
+  columns:
+  - name: agent_id
+    data_tests:
+    - unique
+    - not_null
+- name: dim_queues
+  columns:
+  - name: queue_id
+    data_tests:
+    - unique
+    - not_null
+- name: fact_call_attempts
+  description: One row per dial. Incremental on _ingested_at.
+  columns:
+  - name: call_id
+    data_tests:
+    - unique
+    - not_null
+  - name: lead_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_leads')
+          field: lead_id
+  - name: agent_id
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_agents')
+          field: agent_id
+  - name: outcome
+    data_tests:
+    - accepted_values:
+        arguments:
+          values:
+          - No Answer
+          - Voicemail
+          - Contacted
+          - Busy
+- name: fact_sales
+  columns:
+  - name: sale_id
+    data_tests:
+    - unique
+    - not_null
+  - name: revenue_type
+    data_tests:
+    - accepted_values:
+        arguments:
+          values:
+          - sale
+          - disposition_fee
+          - amount_without_sale
+- name: fact_lead_routing_snapshots
+  columns:
+  - name: snapshot_id
+    data_tests:
+    - unique
+    - not_null
+- name: fact_ai_events
+  description: One row per AI event. Null lead/agent are legitimate and described by link_quality.
+  columns:
+  - name: event_id
+    data_tests:
+    - unique
+    - not_null
+  - name: event_type
+    data_tests:
+    - accepted_values:
+        arguments:
+          values:
+          - katie_email
+          - alas_routing_decision
+          - victoria_call_grade
+  - name: link_quality
+    data_tests:
+    - accepted_values:
+        arguments:
+          values:
+          - full
+          - lead_only
+          - agent_only
+          - orphan
